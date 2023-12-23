@@ -18,7 +18,7 @@ namespace InventoryOperationsApis.Models.RequestModels
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a valid positive number.")]
-        public int? BrandId { get; set; }
+        public int BrandId { get; set; }
 
         [Required]
         public string? Color { get; set; }

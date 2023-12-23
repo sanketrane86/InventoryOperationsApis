@@ -1,6 +1,6 @@
 ﻿namespace InventoryOperationsApis.Models.ResponseModels
 {
-    public class ItermResponse
+    public class ItemResponse
     {
         public int ItemId { get; set; }
         public string? ItemName { get; set; }
