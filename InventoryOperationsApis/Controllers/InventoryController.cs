@@ -1,6 +1,9 @@
-﻿using InventoryOperationsApis.Models;
+﻿using InventoryOperationsApis.Models.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using InventoryOperationsApis.Repositories;
+using InventoryOperationsApis.Models.ResponseModels;
+using System.Net;
 
 namespace InventoryOperationsApis.Controllers
 {
@@ -9,46 +12,94 @@ namespace InventoryOperationsApis.Controllers
     public class InventoryController : ControllerBase
     {
         private readonly ILogger<InventoryController> _logger;
+        InventoryRepository _objInventoryRepository;
+       
 
-        public InventoryController(ILogger<InventoryController> logger)
+        public InventoryController(ILogger<InventoryController> logger, InventoryRepository objInventoryRepository)
         {
             _logger = logger;
+            _objInventoryRepository = objInventoryRepository;
+            
         }
 
-        [HttpGet]
-        public string GetAllInventory()
+        [HttpPost("GetAllInventory")]
+        public IActionResult GetAllInventory(TableOperations objTableOperations)
         {
-            return "Get all inventory";
+           
+            if (objTableOperations == null)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.GetAllInventory(objTableOperations);
+            
+            return Ok(objServiceResponse);
+
         }
 
         [HttpGet("GetById/{id}")]
-        public string GetById(int id)
+        public IActionResult GetById(int id)
         {
-            return $"Get inventory by Id {id}";
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.GetById(id);
+
+            return Ok(objServiceResponse);
         }
 
         [HttpGet("GetByItemId/{itemId}")]
-        public string GetByItemId(int itemId)
+        public IActionResult GetByItemId(int itemId)
         {
-            return $"Get inventory by ItemId {itemId}";
+            if (itemId <= 0)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.GetByItemId(itemId);
+
+            return Ok(objServiceResponse);
         }
 
         [HttpPost]
-        public string PostInventory([FromBody] Inventory objInventory)
+        public IActionResult PostInventory([FromBody] InventoryRequest objInventoryRequest)
         {
-            return $"Create new inventory {objInventory.ItemId}";
+            if (objInventoryRequest == null)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.PostInventory(objInventoryRequest);
+
+            return Ok(objServiceResponse);
         }
 
         [HttpPut]
-        public string PutInventory([FromBody] Inventory objInventory)
+        public IActionResult PutInventory([FromBody] InventoryRequest objInventoryRequest)
         {
-            return $"Update inventory {objInventory.ItemId}";
+            if (objInventoryRequest == null)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.PutInventory(objInventoryRequest);
+
+            return Ok(objServiceResponse);
         }
 
         [HttpDelete("{id}")]
-        public string DeleteInventory(int id)
+        public IActionResult DeleteInventory(int id)
         {
-            return $"Delete inventory by Id {id}";
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            ServiceResponse objServiceResponse = _objInventoryRepository.DeleteInventory(id);
+
+            return Ok(objServiceResponse);
         }
 
     }
