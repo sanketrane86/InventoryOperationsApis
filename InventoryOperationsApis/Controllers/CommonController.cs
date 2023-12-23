@@ -9,7 +9,7 @@ namespace InventoryOperationsApis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Produces("application/json")]
     public class CommonController : ControllerBase
     {
         private readonly ILogger<InventoryController> _logger;
@@ -21,6 +21,11 @@ namespace InventoryOperationsApis.Controllers
             _objCommonRepository = objCommonRepository;
         }
 
+        /// <summary>
+        /// This endpoint gets list of all brands
+        /// </summary>
+        /// <response code="200">Data received successfully</response>
+        /// <response code="404">Data not found</response>
         [HttpGet("GetAllBrands")]
         public IActionResult GetAllBrands()
         {
@@ -31,6 +36,11 @@ namespace InventoryOperationsApis.Controllers
 
         }
 
+        /// <summary>
+        /// This endpoint gets list of all items
+        /// </summary>
+        /// <response code="200">Data received successfully</response>
+        /// <response code="404">Data not found</response>
         [HttpGet("GetAllItems")]
         public IActionResult GetAllItems()
         {
