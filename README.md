@@ -51,7 +51,7 @@ The Swagger UI is accessible at
 https://localhost:7168/swagger/index.html
 
 
-8. API EndPoints (the description with example of request and response is provided on swagger UI
+8. API EndPoints (the description with example of request and response is provided on swagger UI)
 
 POST
 /api/Inventory/GetAllInventory
