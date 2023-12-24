@@ -6,6 +6,7 @@ using InventoryOperationsApis.Models.ResponseModels;
 using System.Net;
 using System.Fabric.Query;
 using InventoryOperationsApis.Swagger.Examples.Responses;
+using InventoryOperationsApis.Models.SwaggerModels;
 
 namespace InventoryOperationsApis.Controllers
 {
@@ -33,7 +34,7 @@ namespace InventoryOperationsApis.Controllers
         /// <response code="400">Bad request</response>
         /// <response code="404">Data not found</response>
         [HttpPost("GetAllInventory")]
-        [ProducesResponseType(typeof(List<InventoryResponse>), 200)]
+        [ProducesResponseType(typeof(SwaggerInventoryResponse), 200)]
         public IActionResult GetAllInventory(TableOperations objTableOperations)
         {
            
@@ -56,7 +57,7 @@ namespace InventoryOperationsApis.Controllers
         /// <response code="400">Bad request</response>
         /// <response code="404">Data not found</response>
         [HttpGet("GetById/{id}")]
-        [ProducesResponseType(typeof(InventoryResponse), 200)]
+        [ProducesResponseType(typeof(SwaggerInventoryResponse), 200)]
         public IActionResult GetById(int id)
         {
             if (id <= 0)
@@ -77,7 +78,7 @@ namespace InventoryOperationsApis.Controllers
         /// <response code="400">Bad request</response>
         /// <response code="404">Data not found</response>
         [HttpGet("GetByItemId/{itemId}")]
-        [ProducesResponseType(typeof(List<InventoryResponse>), 200)]
+        [ProducesResponseType(typeof(SwaggerInventoryResponse), 200)]
         public IActionResult GetByItemId(int itemId)
         {
             if (itemId <= 0)

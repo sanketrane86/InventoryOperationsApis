@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using InventoryOperationsApis.Repositories;
 using InventoryOperationsApis.Models.ResponseModels;
 using System.Net;
+using InventoryOperationsApis.Models.SwaggerModels;
 
 namespace InventoryOperationsApis.Controllers
 {
@@ -27,7 +28,7 @@ namespace InventoryOperationsApis.Controllers
         /// <response code="200">Data received successfully</response>
         /// <response code="404">Data not found</response>
         [HttpGet("GetAllBrands")]
-        [ProducesResponseType(typeof(List<BrandResponse>), 200)]
+        [ProducesResponseType(typeof(SwaggerBrandResponse), 200)]
         public IActionResult GetAllBrands()
         {
            
@@ -43,7 +44,7 @@ namespace InventoryOperationsApis.Controllers
         /// <response code="200">Data received successfully</response>
         /// <response code="404">Data not found</response>
         [HttpGet("GetAllItems")]
-        [ProducesResponseType(typeof(List<ItemResponse>), 200)]
+        [ProducesResponseType(typeof(SwaggerItemResponse), 200)]
         public IActionResult GetAllItems()
         {
 
