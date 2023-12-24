@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [InventoryDb]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  Database [InventoryDb]    Script Date: 24-12-2023 10:16:00 ******/
 CREATE DATABASE [InventoryDb]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,12 +80,12 @@ ALTER DATABASE [InventoryDb] SET QUERY_STORE = OFF
 GO
 USE [InventoryDb]
 GO
-/****** Object:  User [inventoryuser]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  User [inventoryuser]    Script Date: 24-12-2023 10:16:00 ******/
 CREATE USER [inventoryuser] FOR LOGIN [inventoryuser] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [inventoryuser]
 GO
-/****** Object:  Table [dbo].[mst_brands]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  Table [dbo].[mst_brands]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +101,7 @@ CREATE TABLE [dbo].[mst_brands](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[mst_items]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  Table [dbo].[mst_items]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,7 @@ CREATE TABLE [dbo].[mst_items](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[trn_inventory]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  Table [dbo].[trn_inventory]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ ALTER TABLE [dbo].[trn_inventory] ADD  CONSTRAINT [DF_trn_inventory_inve_IsActiv
 GO
 ALTER TABLE [dbo].[trn_inventory] ADD  CONSTRAINT [DF_trn_inventory_inve_IsDeleted]  DEFAULT ('N') FOR [inve_IsDeleted]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_brand_by_id_select]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_brand_by_id_select]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,7 +195,7 @@ BEGIN
 			set @IsSuccess =0
 			set @ReturnID=0
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId		 
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId		 
 		END
 		else
 		BEGIN
@@ -204,7 +204,7 @@ BEGIN
 			set @Msg='Data received successfully'
 			set @IsSuccess =1
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 			
 			select BrandId,BrandName from @Temp
 
@@ -218,8 +218,9 @@ BEGIN
 	END CATCH
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_brands_list]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_brands_list]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -242,7 +243,7 @@ BEGIN
 		set @Msg='Data received successfully'
 		set @IsSuccess =1
 
-		select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message], @ReturnID as ReturnId
+		select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title, @ReturnID as ReturnId
 
 		select 0 as BrandId, '-Select' as BrandName
 		union
@@ -256,10 +257,8 @@ BEGIN
 		 'PROC  = ' + ERROR_PROCEDURE() + ' LINE =' + cast(ERROR_LINE() as varchar) + 'MSG =' + Error_Message() FieldMsg, -999 as ReturnId
 	END CATCH
 END
-
-
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventories_view]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventories_view]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +343,7 @@ BEGIN
 			set @IsSuccess =0
 			set @ReturnID=0
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId		 
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId		 
 		END
 		else
 		BEGIN
@@ -353,7 +352,7 @@ BEGIN
 			set @Msg='Data received successfully'
 			set @IsSuccess =1
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 			
 			select InventoryId,ItemId,ItemName,BrandId,BrandName,Color,Size,Gender,Price,Quantity,IsActive,RowNum from @Temp
 			WHERE RowNum BETWEEN @StartRowNum AND @EndRowNum
@@ -374,7 +373,7 @@ BEGIN
 	END CATCH
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventory_by_id_view]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventory_by_id_view]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -426,7 +425,7 @@ BEGIN
 			set @IsSuccess =0
 			set @ReturnID=0
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId		 
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId		 
 		END
 		else
 		BEGIN
@@ -435,7 +434,7 @@ BEGIN
 			set @Msg='Data received successfully'
 			set @IsSuccess =1
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 			
 			select InventoryId,ItemId,ItemName,BrandId,BrandName,Color,Size,Gender,Price,Quantity,IsActive from @Temp
 
@@ -450,7 +449,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventory_by_itemid_view]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventory_by_itemid_view]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -502,7 +501,7 @@ BEGIN
 			set @IsSuccess =0
 			set @ReturnID=0
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId		 
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId		 
 		END
 		else
 		BEGIN
@@ -511,7 +510,7 @@ BEGIN
 			set @Msg='Data received successfully'
 			set @IsSuccess =1
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 			
 			select InventoryId,ItemId,ItemName,BrandId,BrandName,Color,Size,Gender,Price,Quantity,IsActive from @Temp
 
@@ -524,8 +523,9 @@ BEGIN
 		 'PROC  = ' + ERROR_PROCEDURE() + ' LINE =' + cast(ERROR_LINE() as varchar) + 'MSG =' + Error_Message() FieldMsg, -999 as ReturnId
 	END CATCH
 END
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventory_delete]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventory_delete]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -567,7 +567,7 @@ begin
 
 		end
 
-		select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+		select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 
 	end try
 	begin catch
@@ -576,8 +576,9 @@ begin
 		 'PROC  = ' + ERROR_PROCEDURE() + ' LINE =' + cast(ERROR_LINE() as varchar) + 'MSG =' + Error_Message() FieldMsg, -999 as ReturnId
 	end catch
 end
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventory_insert]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventory_insert]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -628,7 +629,7 @@ begin
 
 		end
 
-		select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+		select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 
 	end try
 	begin catch
@@ -638,7 +639,7 @@ begin
 	end catch
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_inventory_update]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_inventory_update]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -693,7 +694,7 @@ begin
 
 		end
 
-		select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+		select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 
 	end try
 	begin catch
@@ -703,13 +704,11 @@ begin
 	end catch
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_item_by_id_select]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_item_by_id_select]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 
 CREATE procedure [dbo].[sp_item_by_id_select]
 (
@@ -747,7 +746,7 @@ BEGIN
 			set @IsSuccess =0
 			set @ReturnID=0
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId		 
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId		 
 		END
 		else
 		BEGIN
@@ -756,7 +755,7 @@ BEGIN
 			set @Msg='Data received successfully'
 			set @IsSuccess =1
 
-			select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message],@ReturnID as ReturnId
+			select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title,@ReturnID as ReturnId
 			
 			select ItemId,ItemName from @Temp
 
@@ -771,12 +770,12 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_items_list]    Script Date: 23-12-2023 22:46:47 ******/
+/****** Object:  StoredProcedure [dbo].[sp_items_list]    Script Date: 24-12-2023 10:16:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure [dbo].[sp_items_list]
+CREATE procedure [dbo].[sp_items_list]
 as
 BEGIN	
 	BEGIN TRY
@@ -794,7 +793,7 @@ BEGIN
 		set @Msg='Data received successfully'
 		set @IsSuccess =1
 
-		select @IsSuccess as IsSuccess,@ResponseStatus as StatusCode,  @Msg as [Message], @ReturnID as ReturnId
+		select @IsSuccess as IsSuccess,@ResponseStatus as [Status],  @Msg as Title, @ReturnID as ReturnId
 
 		select 0 as ItemId, '-Select' as ItemName
 		union
@@ -808,7 +807,6 @@ BEGIN
 		 'PROC  = ' + ERROR_PROCEDURE() + ' LINE =' + cast(ERROR_LINE() as varchar) + 'MSG =' + Error_Message() FieldMsg, -999 as ReturnId
 	END CATCH
 END
-
 
 GO
 USE [master]
