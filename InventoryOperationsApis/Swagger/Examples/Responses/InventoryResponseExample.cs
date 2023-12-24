@@ -1,26 +1,27 @@
 ﻿using InventoryOperationsApis.Models.ResponseModels;
-
+using InventoryOperationsApis.Models.SwaggerModels;
 using Swashbuckle.AspNetCore.Filters;
 using System.Fabric.Query;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace InventoryOperationsApis.Swagger.Examples.Responses
 {
-    public sealed class CommonResponseExample : IExamplesProvider<ServiceResponse>
+    public sealed class SwaggerExampleInventoryResponse : IExamplesProvider<SwaggerInventoryResponse>
     {
-        public ServiceResponse GetExamples()
+        public SwaggerInventoryResponse GetExamples()
         {
 
-            var ExampleInventoryResponse = new ServiceResponse
+            var ExampleInventoryResponse = new SwaggerInventoryResponse
             {
 
                 IsSuccess = true,
                 ReturnID = 0,
                 StatusCode = "200",
                 Message = "Data received successfully",
-                Data = new  {
-                   InventoryList = 
-                    new List<InventoryResponse>()
+                Data = new InventoryResponseList()
+                { 
+                    InventoryList = 
+                     new List<InventoryResponse>()
                        {
                            new InventoryResponse
                            {
@@ -49,9 +50,8 @@ namespace InventoryOperationsApis.Swagger.Examples.Responses
                                 Quantity = 1250
                             }
                        }
-                    
                 }
-
+                                   
             };
 
 
