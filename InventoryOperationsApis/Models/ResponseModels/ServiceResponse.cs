@@ -13,14 +13,14 @@ namespace InventoryOperationsApis.Models.ResponseModels
         {
             this.IsSuccess = IsSuccess;
             this.ReturnID = ReturnID;
-            this.StatusCode = StatusCode;
-            this.Message = Message;
+            this.Status = StatusCode;
+            this.Title = Message;
             this.Data = (OptionalDataTemp == null) ? new object() : OptionalDataTemp; ;
         }
         public bool IsSuccess { get; set; }
         public long ReturnID { get; set; }
-        public string? StatusCode { get; set; }
-        public string? Message { get; set; }
+        public string? Status { get; set; }
+        public string? Title { get; set; }
 
         public object Data { get; set; }
 

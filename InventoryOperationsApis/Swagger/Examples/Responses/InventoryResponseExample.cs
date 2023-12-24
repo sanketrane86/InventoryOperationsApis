@@ -16,8 +16,8 @@ namespace InventoryOperationsApis.Swagger.Examples.Responses
 
                 IsSuccess = true,
                 ReturnID = 0,
-                StatusCode = "200",
-                Message = "Data received successfully",
+                Status = "200",
+                Title = "Data received successfully",
                 Data = new InventoryResponseList()
                 { 
                     InventoryList = 

@@ -12,14 +12,14 @@ namespace InventoryOperationsApis.Models.SwaggerModels
         {
             this.IsSuccess = IsSuccess;
             this.ReturnID = ReturnID;
-            this.StatusCode = StatusCode;
-            this.Message = Message;
+            this.Status = StatusCode;
+            this.Title = Message;
             this.Data = (objInventoryList == null) ? new InventoryResponseList() : objInventoryList;
         }
         public bool IsSuccess { get; set; }
         public long ReturnID { get; set; }
-        public string? StatusCode { get; set; }
-        public string? Message { get; set; }
+        public string? Status { get; set; }
+        public string? Title { get; set; }
 
         public InventoryResponseList Data { get; set; }
 
@@ -42,14 +42,14 @@ namespace InventoryOperationsApis.Models.SwaggerModels
         {
             this.IsSuccess = IsSuccess;
             this.ReturnID = ReturnID;
-            this.StatusCode = StatusCode;
-            this.Message = Message;
+            this.Status = StatusCode;
+            this.Title = Message;
             this.Data = (objBrandResponseList == null) ? new BrandResponseList() : objBrandResponseList;
         }
         public bool IsSuccess { get; set; }
         public long ReturnID { get; set; }
-        public string? StatusCode { get; set; }
-        public string? Message { get; set; }
+        public string? Status { get; set; }
+        public string? Title { get; set; }
 
         public BrandResponseList Data { get; set; }
 
@@ -71,14 +71,14 @@ namespace InventoryOperationsApis.Models.SwaggerModels
         {
             this.IsSuccess = IsSuccess;
             this.ReturnID = ReturnID;
-            this.StatusCode = StatusCode;
-            this.Message = Message;
+            this.Status = StatusCode;
+            this.Title = Message;
             this.Data = (objItemResponseList == null) ? new ItemResponseList() : objItemResponseList;
         }
         public bool IsSuccess { get; set; }
         public long ReturnID { get; set; }
-        public string? StatusCode { get; set; }
-        public string? Message { get; set; }
+        public string? Status { get; set; }
+        public string? Title { get; set; }
 
         public ItemResponseList Data { get; set; }
 
